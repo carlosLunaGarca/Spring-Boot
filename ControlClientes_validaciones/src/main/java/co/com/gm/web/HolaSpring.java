@@ -1,16 +1,16 @@
 package co.com.gm.web;
 
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-
 import co.com.gm.domain.persona;
 import lombok.extern.slf4j.Slf4j;
 import co.com.gm.Service.PersonaService;
-import co.com.gm.dao.I_PersonaDao;
+
 
 @Controller
 @Slf4j
@@ -37,7 +37,10 @@ public class HolaSpring {
 	}
 	
 	@PostMapping("/guardar")
-	public String guardar(persona persona) {
+	public String guardar(@Valid persona persona, Errors errors) {
+		if (errors.hasErrors()) {
+			return "modificar";
+		}
 	servicePersona.guaradar(persona);
 	return "redirect:/";
 	}
